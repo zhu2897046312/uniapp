@@ -1,0 +1,41 @@
+{
+	"pages": [ //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
+		{
+			"path": "pages/organ/login",
+			"style": {
+				"navigationBarTitleText": "uni-app"
+			}
+		},
+		{
+		      "path": "pages/organ/warranty/list",
+		      "style": {
+		        "navigationBarTitleText": "质保卡列表"
+		  }
+		},
+		{
+		  "path": "pages/organ/warranty/add",
+		  "style": {
+			"navigationBarTitleText": "质保卡录入"
+		  }
+		},
+		{
+		  "path": "pages/organ/warranty/info",
+		  "style": {
+			"navigationBarTitleText": "个人中心"
+		  }
+		},
+		{
+		  "path": "pages/organ/user",
+		  "style": {
+			"navigationBarTitleText": "个人中心"
+		  }
+		},
+	],
+	"globalStyle": {
+		"navigationBarTextStyle": "black",
+		"navigationBarTitleText": "uni-app",
+		"navigationBarBackgroundColor": "#F8F8F8",
+		"backgroundColor": "#F8F8F8"
+	},
+	"uniIdRouter": {}
+}
