@@ -5,11 +5,16 @@ import (
 
 	"h5/model"
 	"h5/service"
+    "h5/config"
 	"encoding/json"
 	"strconv"
 	"time"
 	"gorm.io/gorm"
 	"github.com/gin-gonic/gin"
+    "os"
+    "path/filepath"
+    "strings"
+    "fmt"
 )
 
 var warrantyService *service.WarrantyCardService
@@ -147,4 +152,48 @@ func GetInstitutionByToken(c *gin.Context) {
 	}
 
 	c.JSON(http.StatusOK, gin.H{"data": institution})
+}
+
+func UploadImage(c *gin.Context) {
+    // 单文件上传
+    file, err := c.FormFile("file")
+    if err != nil {
+        c.JSON(http.StatusBadRequest, gin.H{"error": "获取上传文件失败: " + err.Error()})
+        return
+    }
+
+    // 创建上传目录(如果不存在)
+    uploadDir := "uploads"
+    if err := os.MkdirAll(uploadDir, os.ModePerm); err != nil {
+        c.JSON(http.StatusInternalServerError, gin.H{"error": "创建上传目录失败"})
+        return
+    }
+
+    // 生成唯一文件名: 时间戳+原始文件名
+    filename := fmt.Sprintf("%d-%s", time.Now().Unix(), file.Filename)
+    
+    // 本地存储路径使用系统分隔符(Windows是\，Linux是/)
+    localPath := filepath.Join(uploadDir, filename)
+    
+    // 保存文件
+    if err := c.SaveUploadedFile(file, localPath); err != nil {
+        c.JSON(http.StatusInternalServerError, gin.H{"error": "保存文件失败: " + err.Error()})
+        return
+    }
+
+    // 使用配置文件中的IP和端口构建URL
+    serverIP := config.GlobalConfig.Server.IP
+    serverPort := config.GlobalConfig.Server.Port
+    
+    // 统一转换为URL格式的路径(使用/分隔符)
+    urlPath := strings.ReplaceAll(localPath, "\\", "/")
+    
+    // 返回完整URL和本地路径
+    imageURL := fmt.Sprintf("http://%s:%d/%s", serverIP, serverPort, urlPath)
+    c.JSON(http.StatusOK, gin.H{
+        "data": gin.H{
+            "url":  imageURL,   // 使用正斜杠的URL
+            "path": localPath,  // 保留原始本地路径(可能包含反斜杠)
+        },
+    })
 }

@@ -21,6 +21,7 @@ func SetupRouter() *gin.Engine {
 			warranty.POST("/create", handlers.CreateWarrantyCard)
 			warranty.GET("/list", handlers.GetWarrantyCardList)
 			warranty.GET("/:id",handlers.GetWarrantyCardByID)
+			warranty.POST("/upload", handlers.UploadImage)
 		}
 
 		institution := api.Group("/institution")

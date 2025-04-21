@@ -7,26 +7,12 @@ import type { ApiResponse } from '@/types/api';
  * @returns 
  */
 export const uploadFile = (filePath: string): Promise<ApiResponse<any>> => {
-  return new Promise((resolve, reject) => {
-    uni.uploadFile({
-      url: 'http://192.168.0.8:9078/institution/file/upload', // 注意拼接 baseURL
-      filePath,
-      name: 'file',
-      header: {
-        'Authorization': uni.getStorageSync('Authorization') || '',
-      },
-      success: (res) => {
-        try {
-          const data = JSON.parse(res.data); // 处理返回的 JSON 数据
-          resolve(data);
-        } catch (e) {
-          reject(new Error('解析响应数据失败'));
-        }
-      },
-      fail: (err) => {
-        reject(err);
-      }
-    });
+	const formData = new FormData();
+	formData.append('file', filePath);
+  return request.post('/warranty/upload',formData,{
+    header: {
+      'Content-Type': 'multipart/form-data'
+    }
   });
 };
 

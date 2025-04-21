@@ -8,8 +8,9 @@ type Config struct {
     Database DatabaseConfig `mapstructure:"database"`
 }
 type ServerConfig struct {
-    Port int
-    Mode string
+    IP   string `mapstructure:"ip"`
+    Port int    `mapstructure:"port"`
+    Mode string `mapstructure:"mode"`
 }
 type DatabaseConfig struct {
     Driver   string
@@ -20,6 +21,7 @@ type DatabaseConfig struct {
     DBName   string
     Charset  string
 }
+
 func (c *DatabaseConfig) DSN() string {
     return fmt.Sprintf("%s:%s@tcp(%s:%d)/%s?charset=%s&parseTime=True&loc=Local",
         c.Username,
