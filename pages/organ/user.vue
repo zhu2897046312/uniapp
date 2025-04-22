@@ -1,39 +1,59 @@
 <template>
-	<Layout>
-  <view class="page-container">
-    <!-- 顶部标题栏 -->
-    <view class="header">
-      <text class="title">我的</text>
-    </view>
-
-    <view class="content">
-      <!-- 用户信息卡片 -->
-      <view class="user-card">
-        <image 
-          :src="getDefaultAvatar(userInfo?.account_name || '')" 
-          class="avatar"
-          mode="aspectFill"
-        />
-        <view class="user-info">
-          <text class="institution-name">{{ userInfo?.institution_name }}</text>
-          <text class="account-name">{{ userInfo?.account_name }}</text>
+  <Layout>
+    <view class="page-container">
+      <!-- 顶部标题栏 -->
+      <view class="header">
+        <view class="flex items-center">
+          <text class="ml-4 text-xl font-semibold">我的</text>
         </view>
       </view>
 
-      <!-- 用户信息列表 -->
-      <uni-list>
-        <uni-list-item title="机构名称" :rightText="userInfo?.institution_name || ''" />
-        <uni-list-item title="联系人" :rightText="userInfo?.contact_person || ''" />
-        <uni-list-item title="手机号码" :rightText="userInfo?.mobile || ''" />
-      </uni-list>
-
-      <!-- 操作列表 -->
-      <uni-list class="action-list">
-        <uni-list-item title="修改密码" showArrow @click="forget" />
-        <uni-list-item title="退出登录" class="logout-item" @click="logout" />
-      </uni-list>
+      <view class="content">
+        <!-- 用户信息卡片 -->
+        <view class="user-card">
+          <image 
+            :src="getDefaultAvatar(userInfo?.account_name || '')" 
+            class="avatar"
+            mode="aspectFill"
+          />
+          <view class="user-info">
+            <text class="institution-name">{{ userInfo?.institution_name }}</text>
+            <text class="account-name">{{ userInfo?.account_name }}</text>
+          </view>
+        </view>
+        
+        <!-- 联系信息卡片 - 美化后的样式 -->
+        <view class="contact-info">
+          <view class="info-item">
+            <text class="info-label">机构名称</text>
+            <text class="info-value">{{ userInfo?.institution_name || '未设置' }}</text>
+          </view>
+          <view class="info-divider"></view>
+          <view class="info-item">
+            <text class="info-label">联系人</text>
+            <text class="info-value">{{ userInfo?.contact_person || '未设置' }}</text>
+          </view>
+          <view class="info-divider"></view>
+          <view class="info-item">
+            <text class="info-label">手机号码</text>
+            <text class="info-value">{{ userInfo?.mobile || '未设置' }}</text>
+          </view>
+        </view>
+        
+        <!-- 操作列表 - 美化后的样式 -->
+        <view class="action-list">
+          <view class="action-item" @click="forget">
+            <text>修改密码</text>
+            <uni-icons type="arrowright" size="16" color="#999"></uni-icons>
+          </view>
+          <view class="action-divider"></view>
+          <view class="action-item logout-item" @click="logout">
+            <text>退出登录</text>
+            <uni-icons type="arrowright" size="16" color="#999"></uni-icons>
+          </view>
+        </view>
+      </view>
     </view>
-  </view>
   </Layout>
 </template>
 
@@ -111,6 +131,7 @@ onMounted(() => {
 </script>
 
 <style scoped>
+/* 保持与 myPage.vue 相同的整体布局 */
 .page-container {
   min-height: 100vh;
   background-color: #f8f8f8;
@@ -118,38 +139,35 @@ onMounted(() => {
   flex-direction: column;
 }
 
+/* 顶部标题栏 - 完全匹配 myPage.vue 的渐变效果 */
 .header {
+  width: 100%;
   background: linear-gradient(to right, #ff1b6b, #ff9147);
   color: white;
-  padding: 30rpx;
+  padding: 16px;
 }
 
-.title {
-  font-size: 36rpx;
-  font-weight: bold;
-  margin-left: 20rpx;
-}
-
+/* 内容区域 - 匹配 padding 和布局 */
 .content {
+  width: 100%;
   flex: 1;
-  padding: 20rpx;
 }
 
+/* 用户卡片 - 匹配 myPage.vue 的样式 */
 .user-card {
   background-color: #fff;
-  border-radius: 16rpx;
-  padding: 30rpx;
-  margin-bottom: 30rpx;
+  border-radius: 8px;
+  margin-bottom: 16px;
   display: flex;
   align-items: center;
-  box-shadow: 0 2rpx 10rpx rgba(0, 0, 0, 0.05);
+  box-shadow: 0 1px 5px rgba(0, 0, 0, 0.05);
 }
 
 .avatar {
-  width: 120rpx;
-  height: 120rpx;
+  width: 64px;
+  height: 64px;
   border-radius: 50%;
-  margin-right: 30rpx;
+  margin-right: 16px;
 }
 
 .user-info {
@@ -158,26 +176,73 @@ onMounted(() => {
 }
 
 .institution-name {
-  font-size: 32rpx;
-  font-weight: bold;
-  margin-bottom: 10rpx;
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 4px;
 }
 
 .account-name {
-  font-size: 28rpx;
+  font-size: 14px;
   color: #666;
 }
 
-.action-list {
-  margin-top: 40rpx;
+.info-list {
+  margin-bottom: 16px;
+}
+.contact-info {
+  background-color: white;
+  border-radius: 8px;
+  padding: 0 16px;
+  margin-bottom: 16px;
+  box-shadow: 0 1px 5px rgba(0, 0, 0, 0.05);
 }
 
-.logout-item {
+.info-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 16px 0;
+}
+
+.info-label {
+  font-size: 14px;
+  color: #666;
+}
+
+.info-value {
+  font-size: 14px;
+  color: #333;
+  font-weight: 500;
+}
+
+.info-divider {
+  height: 1px;
+  background-color: #f0f0f0;
+  margin: 0 -16px;
+}
+
+/* 操作列表美化 */
+.action-list {
+  background-color: white;
+  border-radius: 8px;
+  padding: 0 16px;
+  box-shadow: 0 1px 5px rgba(0, 0, 0, 0.05);
+}
+
+.action-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 0;
+  font-size: 14px;
+}
+
+.action-item.logout-item {
   color: #ff1b6b;
 }
 
-/* 底部安全区域适配 */
-.safe-area-inset-bottom {
-  padding-bottom: env(safe-area-inset-bottom);
+.action-divider {
+  height: 1px;
+  background-color: #f0f0f0;
+  margin: 0 -16px;
 }
 </style>

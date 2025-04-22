@@ -33,7 +33,7 @@ const goToDetail = (warrantyNo: string) => {
     return
   }
   uni.navigateTo({
-    url: `/pages/organ/warranty/detail?warrantyNo=${warrantyNo}&from=search`
+    url: `/pages/organ/warranty/info?warrantyNo=${warrantyNo}`
   })
 }
 
@@ -143,7 +143,7 @@ onMounted(() => {
               </view>
             </view>
           </view>
-          <text class="iconfont icon-arrow-right arrow-icon"></text>
+          <text class="icon-right">></text>
         </view>
       </view>
       <view v-else class="empty-container">
@@ -280,5 +280,9 @@ onMounted(() => {
 .empty-text {
   color: #999;
   font-size: 14px;
+}
+.icon-right{
+	font-size: 20px;
+	font-weight: 800;
 }
 </style>

@@ -1,7 +1,7 @@
 import not_login_event from '@/events/not_login_event';
 
 // 定义全局的基础 URL 变量，将这里的 IP 地址和端口修改为你需要的
-const baseUrl = 'http://192.168.0.8:9078'; 
+const baseUrl = 'http://localhost:8080/api'; 
 
 // UniApp 请求封装
 const request = {

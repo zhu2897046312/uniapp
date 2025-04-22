@@ -21,7 +21,7 @@
 		{
 		  "path": "pages/organ/warranty/info",
 		  "style": {
-			"navigationBarTitleText": "个人中心"
+			"navigationBarTitleText": "质保卡详情"
 		  }
 		},
 		{
@@ -30,6 +30,12 @@
 			"navigationBarTitleText": "个人中心"
 		  }
 		},
+		{
+			"path": "pages/organ/forget",
+			"style": {
+				"navigationBarTitleText": "修改密码"
+			}
+		}
 	],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",

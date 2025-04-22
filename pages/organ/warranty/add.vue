@@ -121,13 +121,13 @@
 <script lang="ts" setup>
 import { ref } from 'vue';
 import Layout from '../layout.vue';
-import { addWarrantyCard } from '@/api/organ';
+import { addWarrantyCard,uploadFile } from '@/api/organ';
 
 interface FormData {
   card_number: string;
   serial_number: string;
   patient_name: string;
-  patient_age: string;
+  patient_age: number;
   surgeon_name: string;
   surgery_date: string;
   remark: string;
@@ -144,7 +144,7 @@ const formData = ref<FormData>({
   card_number: '',
   serial_number: '',
   patient_name: '',
-  patient_age: '',
+  patient_age: 0,
   surgeon_name: '',
   surgery_date: '',
   remark: '',
@@ -189,28 +189,6 @@ const onDateChange = (e: any) => {
   formData.value.surgery_date = e.detail.value;
 };
 
-// 上传单张图片
-const uploadSingleImage = async (filePath: string): Promise<string> => {
-  return new Promise((resolve, reject) => {
-    uni.uploadFile({
-      url: '你的上传接口地址',
-      filePath: filePath,
-      name: 'file',
-      formData: {},
-      success: (uploadRes) => {
-        const res = JSON.parse(uploadRes.data);
-        if (res.code === 0) {
-          resolve(res.result.url);
-        } else {
-          reject(new Error(res.message));
-        }
-      },
-      fail: (err) => {
-        reject(err);
-      }
-    });
-  });
-};
 
 // 提交表单
 const submitForm = async () => {
@@ -221,7 +199,7 @@ const submitForm = async () => {
     });
     return;
   }
-
+	
   isSubmitting.value = true;
   
   try {
@@ -229,7 +207,7 @@ const submitForm = async () => {
     const uploadedUrls = [];
     for (const item of imageList.value) {
       if (!item.uploaded) {
-        const url = await uploadSingleImage(item.url);
+        const url = await uploadFile(item.url);
         uploadedUrls.push(url);
         item.uploaded = true;
       }
@@ -237,7 +215,10 @@ const submitForm = async () => {
     formData.value.credential = uploadedUrls;
 
     // 提交表单数据
-    const res = await addWarrantyCard(formData.value);
+    const res = await addWarrantyCard({
+    ...formData.value,
+    patient_age: Number(formData.value.patient_age) || 0
+  });
     if (res.code === 0) {
       uni.showToast({
         title: '提交成功',

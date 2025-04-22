@@ -12,9 +12,11 @@ func SetupRouter() *gin.Engine {
 
 	// 全局中间件
 	r.Use(middleware.Logger(), middleware.Recovery())
-
+	r.Use(middleware.Cors())
+	r.Static("/uploads", "./uploads")
 	api := r.Group("/api")
 	{
+		api.POST("/login",handlers.Login)
 		// 保修卡相关路由
 		warranty := api.Group("/warranty")
 		{
@@ -22,11 +24,13 @@ func SetupRouter() *gin.Engine {
 			warranty.GET("/list", handlers.GetWarrantyCardList)
 			warranty.GET("/:id",handlers.GetWarrantyCardByID)
 			warranty.POST("/upload", handlers.UploadImage)
+			warranty.GET("/info",handlers.GetWarrantyCardByNumber)
 		}
 
 		institution := api.Group("/institution")
 		{
 			institution.GET("/info", handlers.GetInstitutionByToken)
+			institution.POST("/update-password", handlers.UpdatePassword)
 		}
 		
 	}

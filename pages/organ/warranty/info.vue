@@ -164,12 +164,8 @@ onMounted(() => {
 .nav-bar {
   background: linear-gradient(to right, #ff1b6b, #ff9147);
   color: white;
-  padding: 15px;
-  position: fixed;
-  top: 0;
   left: 0;
   right: 0;
-  z-index: 100;
 }
 
 .nav-content {
@@ -187,7 +183,7 @@ onMounted(() => {
 /* 内容区域 */
 .content-container {
   flex: 1;
-  padding: 64px 15px 15px; /* 留出导航栏空间 */
+  padding: 15px 15px 15px; /* 留出导航栏空间 */
   box-sizing: border-box;
 }
 
