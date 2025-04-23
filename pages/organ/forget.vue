@@ -1,43 +1,39 @@
-
 <template>
     <Layout>
-	<view class="min-h-screen bg-white pb-20 flex flex-col">
-        <view class="h-16">
-            <view class="fixed top-0 w-full z-50 bg-gradient-to-r from-[#ff1b6b] to-[#ff9147] text-white py-4 px-4">
-                <view class="flex items-center">
-                    <text class="fas fa-arrow-left text-xl" @click="uni.navigateBack()"></text>
-                    <text class="ml-4 text-xl font-semibold">修改密码</text>
+        <view class="page-container">
+            <view class="header">
+                <view class="header-content">
+                    <text class="header-title">修改密码</text>
                 </view>
             </view>
-        </view>
 
-        <view class="container">
-            <form @submit="submitForm">
-                <view class="uni-form-item">
-                    <view class="uni-form-label">账号</view>
-                    <input v-model="formData.account_name" readonly placeholder="请输入账号" />
-                </view>
-                <view class="uni-form-item">
-                    <view class="uni-form-label">新密码</view>
-                    <input v-model="formData.new_password" placeholder="请输入新密码" password />
-                </view>
-                <view class="uni-form-item">
-                    <view class="uni-form-label">确认密码</view>
-                    <input v-model="formData.confirm_password" placeholder="请输入确认密码" password />
-                </view>
-                <view class="mt-4 px-4">
-                    <button 
-                        :style="{ background: 'linear-gradient(to right, #ff1b6b, #ff9147)', color: 'white', width: '100%', border: 'none' }"
-                        @click="submitForm"
-                        form-type="submit"
-                    >
-                        提交
-                    </button>
-                </view>
-            </form>
+            <view class="form-container">
+                <form @submit="submitForm">
+                    <view class="form-item">
+                        <view class="form-label">账号</view>
+                        <input class="form-input" v-model="formData.account_name" readonly placeholder="请输入账号" />
+                    </view>
+                    <view class="form-item">
+                        <view class="form-label">新密码</view>
+                        <input class="form-input" v-model="formData.new_password" placeholder="请输入新密码" password />
+                    </view>
+                    <view class="form-item">
+                        <view class="form-label">确认密码</view>
+                        <input class="form-input" v-model="formData.confirm_password" placeholder="请输入确认密码" password />
+                    </view>
+                    <view class="submit-btn-container">
+                        <button 
+                            class="submit-btn"
+                            @click="submitForm"
+                            form-type="submit"
+                        >
+                            提交
+                        </button>
+                    </view>
+                </form>
+            </view>
         </view>
-    </view>
-	</Layout>
+    </Layout>
 </template>
 
 <script lang="ts" setup>
@@ -94,22 +90,88 @@ const submitForm = async () => {
 </script>
 
 <style scoped>
+/* 全局样式重置 */
 ::-webkit-inner-spin-button,
 ::-webkit-outer-spin-button {
     -webkit-appearance: none;
     margin: 0;
 }
-.min-h-screen {
-    min-height: calc(100vh - 64px); /* 减去底部导航高度 */
-}
-.uni-form-item {
+
+/* 页面容器 */
+.page-container {
+    min-height: 100vh;
+    background-color: #ffffff;
+    padding-bottom: 100rpx;
     display: flex;
-    align-items: center;
-    padding: 10px 0;
-}
-.uni-form-label {
-    width: 80px;
+    flex-direction: column;
 }
 
+/* 头部样式 */
+.header {
+    height: 80rpx;
+    position: relative;
+}
+
+.header-content {
+    position: fixed;
+    left: 0;
+    height: 80rpx;
+    background: linear-gradient(to right, #ff1b6b, #ff9147);
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+	justify-content: center;
+	width: 100%;
+}
+
+.header-icon {
+    font-size: 36rpx;
+}
+
+.header-title {
+    font-size: 36rpx;
+    font-weight: 600;
+}
+
+/* 表单容器 */
+.form-container {
+    padding: 30rpx;
+}
+
+/* 表单项 */
+.form-item {
+    display: flex;
+    align-items: center;
+    padding: 20rpx 0;
+    border-bottom: 1rpx solid #eee;
+}
+
+.form-label {
+    width: 150rpx;
+    font-size: 28rpx;
+    color: #333;
+}
+
+.form-input {
+    flex: 1;
+    font-size: 28rpx;
+    padding: 10rpx 0;
+}
+
+/* 提交按钮 */
+.submit-btn-container {
+    margin-top: 40rpx;
+    padding: 0 30rpx;
+}
+
+.submit-btn {
+    background: linear-gradient(to right, #ff1b6b, #ff9147);
+    color: white;
+    width: 100%;
+    border: none;
+    border-radius: 50rpx;
+    height: 80rpx;
+    line-height: 80rpx;
+    font-size: 32rpx;
+}
 </style>
-    
